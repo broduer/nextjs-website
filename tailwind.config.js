@@ -10,7 +10,9 @@ module.exports = {
   },
   variants: {
     extend: {
+      textColor: ["active"],
       backgroundColor: ["active"],
+      gradientColorStops: ["active"],
     },
   },
   plugins: [],
