@@ -17,7 +17,7 @@ export default function NavigationBarWithSearchBar() {
           isNavigationMenuOpen={isNavigationMenuOpen}
           setIsNavigationMenuOpen={setIsNavigationMenuOpen}
         />
-        <SearchBar className="hidden sm:block px-4 flex-grow" />
+        <SearchBar className="hidden sm:block px-4 flex-grow mx-8" />
         <NavigationLinks />
       </div>
       <NavigationMenu

@@ -1,11 +1,11 @@
 export default function GameCard() {
   return (
-    <div className="w-full mx-auto rounded-lg overflow-hidden shadow-lg">
+    <div className="w-full flex flex-col mx-auto rounded-lg overflow-hidden shadow-lg">
       <img
         className="w-full object-cover object-center"
         src="https://t1.rbxcdn.com/d3d92c240136e1bd600cbc42fc56a228"
       />
-      <div className="w-full h-full p-4 flex flex-col bg-nanobloxGray text-white">
+      <div className="w-full p-4 flex-grow flex flex-col bg-nanobloxGray text-white">
         <div className="text-xl font-semibold">Guest World</div>
         <div className="text-sm">By HD Team</div>
         <div className="flex pt-4">
