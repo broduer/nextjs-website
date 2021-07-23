@@ -6,7 +6,20 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        nanobloxGray: {
+          light: "#36393f",
+          DEFAULT: "#292b2f",
+          dark: "#161719",
+        },
+        blue: {
+          350: "#7ab5fc",
+          450: "#4e94f8",
+          550: "#3073f1",
+        },
+      },
+    },
   },
   variants: {
     extend: {
