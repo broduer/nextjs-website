@@ -1,8 +1,7 @@
 export default function SearchFilters() {
   return (
     <div className="m-4 flex flex-col sm:flex-row sm:items-baseline">
-      <div className="lg:flex-1 flex justify-evenly">
-        {/* 550 450 350 */}
+      <div className="lg:flex-1 flex">
         <button className="sm:mr-4 px-4 py-2 rounded-lg text-white bg-gradient-to-r from-blue-500 to-blue-450 focus:outline-none focus:ring-4 focus:ring-opacity-50 focus:ring-blue-400 focus:from-blue-400 focus:to-blue-350 hover:from-blue-400 hover:to-blue-350 active:from-blue-600 active:to-blue-550">
           Most Popular
         </button>

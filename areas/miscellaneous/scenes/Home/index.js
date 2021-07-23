@@ -12,9 +12,10 @@ export default function Home() {
       >
         <div className="w-full flex-grow bg-black bg-opacity-70">
           <div className="mx-auto flex flex-col container">
-            <div className="mx-auto w-full px-8 sm:px-24 md:px-28 lg:px-32 xl:px-64 text-center font-semibold">
+            <div className="mx-auto w-full px-8 sm:px-24 md:px-28 lg:px-32 xl:px-64 2xl:px-80 text-center font-semibold">
               <div className="mt-16 text-white text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-7xl">
-                TAKE CONTROL OF YOUR <span className="text-red-500">GAME</span>
+                TAKE CONTROL OF <br className="hidden 2xl:block" /> YOUR{" "}
+                <span className="text-red-500">GAME</span>
               </div>
               <div className="mt-4 text-gray-400 leading-5 sm:text-lg md:text-xl lg:text-xl xl:text-xl">
                 An administration system powering dynamic roles, modular
