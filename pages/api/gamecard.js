@@ -13,13 +13,14 @@ export default async function handler(request, response) {
       if (!universeData) throw new Error("UniverseId is invalid");
 
       const {
+        rootPlaceId,
         name: title,
         creator,
         playing: onlinePlayers,
         favoritedCount: totalFavorites,
       } = universeData;
 
-      const creatorName = creator.name;
+      const { id: creatorId, name: creatorName, type: creatorType } = creator;
 
       const universeThumbnailResponse = await fetch(
         `https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds=${universeId}&size=768x432&format=Png&isCircular=false`
@@ -39,8 +40,11 @@ export default async function handler(request, response) {
       return response.status(200).json({
         success: true,
         payload: {
+          rootPlaceId,
           title,
+          creatorId,
           creatorName,
+          creatorType,
           onlinePlayers,
           totalFavorites,
           thumbnailUrl,

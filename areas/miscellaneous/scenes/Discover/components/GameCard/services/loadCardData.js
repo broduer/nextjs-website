@@ -1,11 +1,4 @@
-export default async function loadCardData(
-  universeId,
-  setThumbnailUrl,
-  setTitle,
-  setCreatorName,
-  setOnlinePlayers,
-  setTotalFavorites
-) {
+export default async function loadCardData(universeId, setGameCardData) {
   const universeDataResponse = await fetch("/api/gamecard", {
     method: "POST",
     body: JSON.stringify({ universeId }),
@@ -14,12 +7,5 @@ export default async function loadCardData(
 
   if (!universeData) throw new Error("UniverseId is invalid");
 
-  const { title, creatorName, onlinePlayers, totalFavorites, thumbnailUrl } =
-    universeData.payload;
-
-  setTitle(title);
-  setCreatorName(creatorName);
-  setOnlinePlayers(onlinePlayers);
-  setTotalFavorites(totalFavorites);
-  setThumbnailUrl(thumbnailUrl);
+  setGameCardData(universeData.payload);
 }

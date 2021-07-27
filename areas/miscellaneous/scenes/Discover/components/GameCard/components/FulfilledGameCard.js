@@ -1,10 +1,23 @@
-export default function FulfilledGameCard({
-  thumbnailUrl,
-  title,
-  creatorName,
-  onlinePlayers,
-  totalFavorites,
-}) {
+import numberFormatter from "../../../../../../../services/utilities/numberFormatter";
+
+export default function FulfilledGameCard({ gameCardData }) {
+  const {
+    rootPlaceId,
+    title,
+    creatorId,
+    creatorName,
+    creatorType,
+    onlinePlayers,
+    totalFavorites,
+    thumbnailUrl,
+  } = gameCardData;
+
+  const rootPlaceUrl = `https://www.roblox.com/games/${rootPlaceId}`;
+  const creatorProfileUrl =
+    creatorType === "Group"
+      ? `https://www.roblox.com/groups/${creatorId}`
+      : `https://www.roblox.com/users/${creatorId}`;
+
   return (
     <div className="w-full flex flex-col mx-auto rounded-lg overflow-hidden shadow-lg">
       <div className="relative" style={{ paddingBottom: "56%" }}>
@@ -15,9 +28,19 @@ export default function FulfilledGameCard({
       </div>
       <div className="w-full p-4 flex-grow flex flex-col bg-nanobloxGray text-white">
         <div className="text-xl font-semibold leading-tight">{title}</div>
-        <div className="text-sm">By {creatorName}</div>
-        <div className="flex pt-4">
-          <button className="px-8 my-1 rounded-lg text-xl text-white bg-gradient-to-r from-green-400 to-green-500 focus:outline-none focus:ring-4 focus:ring-opacity-50 focus:ring-green-400 focus:from-green-300 focus:to-green-400 hover:from-green-300 hover:to-green-400 active:from-green-500 active:to-green-600">
+        <div className="text-gray-400 text-sm">
+          By{" "}
+          <a href={creatorProfileUrl} target="_blank" rel="noopener noreferrer">
+            {creatorName}
+          </a>
+        </div>
+        <div className="mt-auto flex pt-4">
+          <button
+            className="px-8 my-1 rounded-lg text-xl text-white bg-gradient-to-r from-green-400 to-green-500 focus:outline-none focus:ring-4 focus:ring-opacity-50 focus:ring-green-400 focus:from-green-300 focus:to-green-400 hover:from-green-300 hover:to-green-400 active:from-green-500 active:to-green-600"
+            onClick={() =>
+              window.open(rootPlaceUrl, "_blank", "noopener,noreferrer")
+            }
+          >
             PLAY
           </button>
           <div className="flex flex-col pl-4">
@@ -34,7 +57,7 @@ export default function FulfilledGameCard({
                   clipRule="evenodd"
                 />
               </svg>
-              {onlinePlayers} Online
+              {numberFormatter(onlinePlayers, 1)} Online
             </div>
             <div>
               <svg
@@ -49,7 +72,7 @@ export default function FulfilledGameCard({
                   clipRule="evenodd"
                 />
               </svg>
-              {totalFavorites} Favorites
+              {numberFormatter(totalFavorites)} Favorites
             </div>
           </div>
         </div>
