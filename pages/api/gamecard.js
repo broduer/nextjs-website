@@ -3,52 +3,44 @@ import fetch from "node-fetch";
 export default async function handler(request, response) {
   try {
     if (request.method === "POST") {
-      const { universeId } = JSON.parse(request.body);
+      const { universeIds } = JSON.parse(request.body);
+      const universeIdsJoined = universeIds.join(",");
 
-      const universeDataResponse = await fetch(
-        `https://games.roblox.com/v1/games?universeIds=${universeId}`
+      const universesDataResponse = await fetch(
+        `https://games.roblox.com/v1/games?universeIds=${universeIdsJoined}`
       );
-      const universeData = (await universeDataResponse.json()).data[0];
+      const universesData = (await universesDataResponse.json()).data;
 
-      if (!universeData) throw new Error("UniverseId is invalid");
-
-      const {
-        rootPlaceId,
-        name: title,
-        creator,
-        playing: onlinePlayers,
-        favoritedCount: totalFavorites,
-      } = universeData;
-
-      const { id: creatorId, name: creatorName, type: creatorType } = creator;
-
-      const universeThumbnailResponse = await fetch(
-        `https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds=${universeId}&size=768x432&format=Png&isCircular=false`
-      );
-      const universeThumbnailData = (await universeThumbnailResponse.json())
-        .data[0];
-
-      if (!universeThumbnailData)
+      if (!universesData)
         throw new Error("Unable to connect to Roblox web API");
 
-      const rootPlaceThumbnailData = universeThumbnailData.thumbnails[0];
+      const universesThumbnailResponse = await fetch(
+        `https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds=${universeIdsJoined}&size=768x432&format=Png&isCircular=false`
+      );
+      const universesThumbnailData = (await universesThumbnailResponse.json())
+        .data;
 
-      if (!rootPlaceThumbnailData) throw new Error("Unable to find root place");
+      if (!universesThumbnailData)
+        throw new Error("Unable to connect to Roblox web API");
 
-      const { imageUrl: thumbnailUrl } = rootPlaceThumbnailData;
+      const universesImportantData = universesData.map((universeData) => ({
+        universeId: universeData.id,
+        rootPlaceId: universeData.rootPlaceId,
+        title: universeData.name,
+        creatorId: universeData.creator.id,
+        creatorName: universeData.creator.name,
+        creatorType: universeData.creator.type,
+        onlinePlayers: universeData.playing,
+        totalFavorites: universeData.favoritedCount,
+        thumbnailUrl: universesThumbnailData.filter(
+          (universeThumbnailData) =>
+            universeData.id === universeThumbnailData.universeId
+        )[0]?.thumbnails[0]?.imageUrl,
+      }));
 
       return response.status(200).json({
         success: true,
-        payload: {
-          rootPlaceId,
-          title,
-          creatorId,
-          creatorName,
-          creatorType,
-          onlinePlayers,
-          totalFavorites,
-          thumbnailUrl,
-        },
+        payload: universesImportantData,
       });
     }
   } catch (error) {

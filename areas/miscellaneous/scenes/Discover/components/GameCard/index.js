@@ -4,25 +4,13 @@ import useAsync from "../../../../../../services/hooks/useAsync";
 import LoadingGameCard from "./components/LoadingGameCard";
 import FulfilledGameCard from "./components/FulfilledGameCard";
 
-import loadCardData from "./services/loadCardData";
-
-export default function GameCard({ universeId }) {
-  const [gameCardData, setGameCardData] = useState({});
-
-  const { initiate, status, response, error } = useAsync(async () =>
-    loadCardData(universeId, setGameCardData)
-  );
-
-  useEffect(() => initiate(), []);
-
+export default function GameCard({ gameCardData }) {
   return (
     <>
-      {status === "pending" ? (
-        <LoadingGameCard />
+      {gameCardData.title ? (
+        <FulfilledGameCard gameCardData={gameCardData} />
       ) : (
-        status === "fulfilled" && (
-          <FulfilledGameCard gameCardData={gameCardData} />
-        )
+        <LoadingGameCard />
       )}
     </>
   );
