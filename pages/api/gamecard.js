@@ -25,17 +25,19 @@ export default async function handler(request, response) {
 
       const universesImportantData = universesData.map((universeData) => ({
         universeId: universeData.id,
-        rootPlaceId: universeData.rootPlaceId,
-        title: universeData.name,
-        creatorId: universeData.creator.id,
-        creatorName: universeData.creator.name,
-        creatorType: universeData.creator.type,
-        onlinePlayers: universeData.playing,
-        totalFavorites: universeData.favoritedCount,
-        thumbnailUrl: universesThumbnailData.filter(
-          (universeThumbnailData) =>
-            universeData.id === universeThumbnailData.universeId
-        )[0]?.thumbnails[0]?.imageUrl,
+        data: {
+          rootPlaceId: universeData.rootPlaceId,
+          title: universeData.name,
+          creatorId: universeData.creator.id,
+          creatorName: universeData.creator.name,
+          creatorType: universeData.creator.type,
+          onlinePlayers: universeData.playing,
+          totalFavorites: universeData.favoritedCount,
+          thumbnailUrl: universesThumbnailData.filter(
+            (universeThumbnailData) =>
+              universeData.id === universeThumbnailData.universeId
+          )[0]?.thumbnails[0]?.imageUrl,
+        },
       }));
 
       return response.status(200).json({

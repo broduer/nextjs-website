@@ -4,26 +4,37 @@ import { useState, useEffect } from "react";
 import GameCard from "../GameCard";
 
 import getGameCardsData from "./services/getGameCardsData";
+import getUniversesIds from "./services/getUniversesIds";
 
 export default function GameCardsManager({ className }) {
-  const [gameCardsData, setGameCardsData] = useState([
-    { universeId: 2082205150 },
-    { universeId: 1077961373 },
-    { universeId: 117307972 },
-    { universeId: 552855493 },
-    { universeId: 2471084 },
-    { universeId: 1650291138 },
-    { universeId: 2265532481 },
-  ]);
+  const [universeIdsData, setUniverseIdsData] = useState([]);
+  const [gameCardsData, setGameCardsData] = useState([]);
 
-  const { initiate, status, response, error } = useAsync(async () =>
-    getGameCardsData(gameCardsData)
-  );
+  const [
+    loadUniverseIds,
+    universeIdsStatus,
+    universeIdsResponse,
+    universeIdsError,
+  ] = useAsync(() => getUniversesIds(universeIdsData));
 
-  useEffect(initiate, []);
+  const [
+    loadGameCardsData,
+    gameCardsDataStatus,
+    gameCardsDataResponse,
+    gameCardsDataError,
+  ] = useAsync(() => getGameCardsData(universeIdsData));
+
+  useEffect(() => loadUniverseIds(), []);
+
   useEffect(() => {
-    setGameCardsData((value) => response || value);
-  }, [response]);
+    setUniverseIdsData((value) => universeIdsResponse || value);
+  }, [universeIdsResponse]);
+
+  useEffect(() => loadGameCardsData(), [universeIdsData]);
+
+  useEffect(() => {
+    setGameCardsData((value) => gameCardsDataResponse || value);
+  }, [gameCardsDataResponse]);
 
   return (
     <div
@@ -31,7 +42,7 @@ export default function GameCardsManager({ className }) {
     >
       {gameCardsData.map(
         (gameCardData, gameCardIndex) =>
-          (Boolean(gameCardData.title) || status === "pending") && (
+          (Boolean(gameCardData.data) || status === "pending") && (
             <GameCard key={gameCardIndex} gameCardData={gameCardData} />
           )
       )}

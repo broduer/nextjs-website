@@ -29,5 +29,5 @@ export default function useAsync(task) {
       });
   };
 
-  return { initiate, status, response, error };
+  return [initiate, status, response, error];
 }
