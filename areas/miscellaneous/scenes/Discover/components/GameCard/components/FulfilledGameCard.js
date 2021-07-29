@@ -10,7 +10,7 @@ export default function FulfilledGameCard({ gameCardData }) {
     onlinePlayers,
     totalFavorites,
     thumbnailUrl,
-  } = gameCardData;
+  } = gameCardData.data;
 
   const rootPlaceUrl = `https://www.roblox.com/games/${rootPlaceId}`;
   const creatorProfileUrl =

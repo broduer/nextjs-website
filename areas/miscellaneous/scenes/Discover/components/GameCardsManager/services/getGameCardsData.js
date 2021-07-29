@@ -1,7 +1,9 @@
-export default async function getGameCardsData(gameCardsData) {
-  const universeIds = gameCardsData
-    .filter((gameCardData) => !gameCardData.data)
-    .map((gameCardData) => gameCardData.universeId);
+export default async function getGameCardsData(universeIdsData) {
+  if (universeIdsData.length === 0) {
+    return;
+  }
+
+  const universeIds = universeIdsData.map((element) => element.universeId);
 
   const universeDataResponse = await fetch("/api/gamecard", {
     method: "POST",
@@ -9,5 +11,11 @@ export default async function getGameCardsData(gameCardsData) {
   });
   const universeData = await universeDataResponse.json();
 
-  return universeData.payload;
+  if (universeData.success && Boolean(universeData.payload)) {
+    const existingData = universeIdsData.filter((oldData) =>
+      universeData.payload.some((newData) => newData._id === oldData)
+    );
+
+    return [...existingData, ...universeData.payload];
+  }
 }
