@@ -12,9 +12,9 @@ export default function useAsync(task) {
     };
   }, []);
 
-  const initiate = () => {
+  const initiate = (args) => {
     setStatus("pending");
-    task()
+    task(args)
       .then((response) => {
         if (mountedRef.current) {
           setResponse(response);
