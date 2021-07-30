@@ -1,5 +1,5 @@
 import useAsync from "../../../../../../services/hooks/useAsync";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import GameCard from "../GameCard";
 
@@ -7,7 +7,7 @@ import getGameCardsData from "./services/getGameCardsData";
 import getUniversesIds from "./services/getUniversesIds";
 
 export default function GameCardsManager({ className }) {
-  const [universeIdsData, setUniverseIdsData] = useState([]);
+  const loadGameCardsDataRef = useRef(false);
   const [gameCardsData, setGameCardsData] = useState([]);
 
   const [
@@ -15,26 +15,47 @@ export default function GameCardsManager({ className }) {
     universeIdsStatus,
     universeIdsResponse,
     universeIdsError,
-  ] = useAsync(() => getUniversesIds(universeIdsData));
+  ] = useAsync(getUniversesIds);
 
   const [
     loadGameCardsData,
     gameCardsDataStatus,
     gameCardsDataResponse,
     gameCardsDataError,
-  ] = useAsync(() => getGameCardsData(universeIdsData));
+  ] = useAsync(getGameCardsData);
 
-  useEffect(() => loadUniverseIds(), []);
+  useEffect(() => loadUniverseIds(gameCardsData), []);
 
   useEffect(() => {
-    setUniverseIdsData((value) => universeIdsResponse || value);
-  }, [universeIdsResponse]);
+    if (loadGameCardsDataRef.current) {
+      loadGameCardsData(gameCardsData);
+      loadGameCardsDataRef.current = false;
+    }
+  }, [gameCardsData]);
 
-  useEffect(() => loadGameCardsData(), [universeIdsData]);
+  useEffect(() => {
+    setGameCardsData((value) => universeIdsResponse || value);
+    loadGameCardsDataRef.current = true;
+  }, [universeIdsResponse]);
 
   useEffect(() => {
     setGameCardsData((value) => gameCardsDataResponse || value);
   }, [gameCardsDataResponse]);
+
+  useEffect(() => {
+    const loadOnScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop + 10 >=
+        document.documentElement.offsetHeight
+      ) {
+        if (universeIdsStatus !== "pending") {
+          loadUniverseIds(gameCardsData);
+        }
+      }
+    };
+    window.addEventListener("scroll", loadOnScroll);
+    return () => window.removeEventListener("scroll", loadOnScroll);
+  }, [gameCardsData]);
 
   return (
     <div
@@ -42,7 +63,7 @@ export default function GameCardsManager({ className }) {
     >
       {gameCardsData.map(
         (gameCardData, gameCardIndex) =>
-          (Boolean(gameCardData.data) || status === "pending") && (
+          (Boolean(gameCardData.data) || gameCardsDataStatus === "pending") && (
             <GameCard key={gameCardIndex} gameCardData={gameCardData} />
           )
       )}
