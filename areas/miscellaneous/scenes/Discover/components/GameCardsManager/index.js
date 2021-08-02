@@ -1,46 +1,28 @@
 import useAsync from "../../../../../../services/hooks/useAsync";
 import { useState, useEffect, useRef } from "react";
-
-import GameCard from "../GameCard";
+import FulfilledGameCard from "./components/FulfilledGameCard";
+import PendingGameCard from "./components/PendingGameCard";
 
 import getGameCardsData from "./services/getGameCardsData";
-import getUniversesIds from "./services/getUniversesIds";
 
 export default function GameCardsManager({ className }) {
-  const loadGameCardsDataRef = useRef(false);
   const [gameCardsData, setGameCardsData] = useState([]);
 
-  const [
-    loadUniverseIds,
-    universeIdsStatus,
-    universeIdsResponse,
-    universeIdsError,
-  ] = useAsync(getUniversesIds);
+  const noMorePagesRef = useRef(false);
 
-  const [
-    loadGameCardsData,
-    gameCardsDataStatus,
-    gameCardsDataResponse,
-    gameCardsDataError,
-  ] = useAsync(getGameCardsData);
+  const [initiate, status, response, error] = useAsync(getGameCardsData);
 
-  useEffect(() => loadUniverseIds(gameCardsData), []);
+  useEffect(() => initiate(gameCardsData), []);
 
   useEffect(() => {
-    if (loadGameCardsDataRef.current) {
-      loadGameCardsData(gameCardsData);
-      loadGameCardsDataRef.current = false;
+    if (response) {
+      if (response.length === 0) {
+        noMorePagesRef.current = true;
+      } else {
+        setGameCardsData((value) => [...value, ...response]);
+      }
     }
-  }, [gameCardsData]);
-
-  useEffect(() => {
-    setGameCardsData((value) => universeIdsResponse || value);
-    loadGameCardsDataRef.current = true;
-  }, [universeIdsResponse]);
-
-  useEffect(() => {
-    setGameCardsData((value) => gameCardsDataResponse || value);
-  }, [gameCardsDataResponse]);
+  }, [response]);
 
   useEffect(() => {
     const loadOnScroll = () => {
@@ -48,25 +30,24 @@ export default function GameCardsManager({ className }) {
         window.innerHeight + document.documentElement.scrollTop + 10 >=
         document.documentElement.offsetHeight
       ) {
-        if (universeIdsStatus !== "pending") {
-          loadUniverseIds(gameCardsData);
+        if (status !== "pending" && !noMorePagesRef.current) {
+          initiate(gameCardsData);
         }
       }
     };
     window.addEventListener("scroll", loadOnScroll);
     return () => window.removeEventListener("scroll", loadOnScroll);
-  }, [gameCardsData]);
+  }, [status, gameCardsData]);
 
   return (
     <div
       className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ${className}`}
     >
-      {gameCardsData.map(
-        (gameCardData, gameCardIndex) =>
-          (Boolean(gameCardData.data) || gameCardsDataStatus === "pending") && (
-            <GameCard key={gameCardIndex} gameCardData={gameCardData} />
-          )
-      )}
+      {gameCardsData.map((gameCardData, gameCardIndex) => (
+        <FulfilledGameCard key={gameCardIndex} gameCardData={gameCardData} />
+      ))}
+      {status === "pending" &&
+        [...Array(8).keys()].map((_, index) => <PendingGameCard key={index} />)}
     </div>
   );
 }

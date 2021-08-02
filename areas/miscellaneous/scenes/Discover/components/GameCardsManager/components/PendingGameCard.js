@@ -1,6 +1,6 @@
 import DefaultRobloxPlace from "../../../../../../../public/images/DefaultRobloxPlace.png";
 
-export default function LoadingGameCard() {
+export default function PendingGameCard() {
   return (
     <div className="w-full flex flex-col rounded-lg overflow-hidden shadow-lg">
       <div className="relative" style={{ paddingBottom: "56%" }}>
