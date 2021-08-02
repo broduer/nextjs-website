@@ -31,6 +31,7 @@ export default function GameCardsManager({ className }) {
         document.documentElement.offsetHeight
       ) {
         if (status !== "pending" && !noMorePagesRef.current) {
+          console.log(status, noMorePagesRef.current);
           initiate(gameCardsData);
         }
       }
