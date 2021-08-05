@@ -33,18 +33,32 @@ export default function GameCardsManager({ className, searchFilter }) {
   }, [response]);
 
   useEffect(() => {
-    const loadOnScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop + 10 >=
-        document.documentElement.offsetHeight
-      ) {
-        if (status !== "pending" && !noMorePagesRef.current) {
-          initiate({ searchFilter, gameCardsData });
+    if (document.documentElement.offsetHeight > window.innerHeight) {
+      const loadOnScroll = () => {
+        if (
+          window.innerHeight + document.documentElement.scrollTop + 10 >=
+          document.documentElement.offsetHeight
+        ) {
+          if (
+            status !== "idle" &&
+            status !== "pending" &&
+            !noMorePagesRef.current
+          ) {
+            initiate({ searchFilter, gameCardsData });
+          }
         }
+      };
+      window.addEventListener("scroll", loadOnScroll);
+      return () => window.removeEventListener("scroll", loadOnScroll);
+    } else {
+      if (
+        status !== "idle" &&
+        status !== "pending" &&
+        !noMorePagesRef.current
+      ) {
+        initiate({ searchFilter, gameCardsData });
       }
-    };
-    window.addEventListener("scroll", loadOnScroll);
-    return () => window.removeEventListener("scroll", loadOnScroll);
+    }
   }, [status, gameCardsData]);
 
   return (
