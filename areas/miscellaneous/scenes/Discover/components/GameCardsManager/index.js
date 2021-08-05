@@ -4,15 +4,23 @@ import FulfilledGameCard from "./components/FulfilledGameCard";
 import PendingGameCard from "./components/PendingGameCard";
 
 import getGameCardsData from "./services/getGameCardsData";
+import getGameCardsUrl from "./services/getGameCardsUrl";
 
-export default function GameCardsManager({ className }) {
+export default function GameCardsManager({ className, searchFilter }) {
   const [gameCardsData, setGameCardsData] = useState([]);
 
   const noMorePagesRef = useRef(false);
 
-  const [initiate, status, response, error] = useAsync(getGameCardsData);
+  const [initiate, status, response, error] = useAsync(
+    ({ searchFilter, gameCardsData }) =>
+      getGameCardsData(getGameCardsUrl(searchFilter, gameCardsData))
+  );
 
-  useEffect(() => initiate(gameCardsData), []);
+  useEffect(() => {
+    setGameCardsData([]);
+    noMorePagesRef.current = false;
+    initiate({ searchFilter, gameCardsData: [] });
+  }, [searchFilter]);
 
   useEffect(() => {
     if (response) {
@@ -31,7 +39,7 @@ export default function GameCardsManager({ className }) {
         document.documentElement.offsetHeight
       ) {
         if (status !== "pending" && !noMorePagesRef.current) {
-          initiate(gameCardsData);
+          initiate({ searchFilter, gameCardsData });
         }
       }
     };
