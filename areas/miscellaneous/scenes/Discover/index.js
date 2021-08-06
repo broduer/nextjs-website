@@ -12,7 +12,11 @@ export default function Discover() {
 
   return (
     <div className="w-full min-h-screen flex flex-col bg-nanobloxGray-light">
-      <NavigationBarWithSearchBar />
+      <NavigationBarWithSearchBar
+        searchCallback={(searchValue) =>
+          setSearchFilter({ type: "search", value: searchValue })
+        }
+      />
       <div className="container mx-auto my-2 flex-grow">
         <SearchFilters
           searchFilter={searchFilter}

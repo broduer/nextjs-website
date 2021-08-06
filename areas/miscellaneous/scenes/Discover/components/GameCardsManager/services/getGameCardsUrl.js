@@ -14,5 +14,8 @@ export default function getGameCardsUrl(searchFilter, gameCardsData) {
     ? isFirstPage
       ? `${commonUrl}/recentlyadded`
       : `${commonUrl}/recentlyadded/${lastGameCard.verifiedDate}`
-    : "default";
+    : searchFilter.type === "search" &&
+      `${commonUrl}/search/${searchFilter.value}/${Math.ceil(
+        gameCardsData.length / 8
+      )}`;
 }
