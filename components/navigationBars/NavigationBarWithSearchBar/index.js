@@ -6,8 +6,9 @@ import SearchBar from "./components/SearchBar";
 import NavigationLinks from "../components/NavigationLinks";
 import NavigationMenu from "../components/NavigationMenu";
 
-export default function NavigationBarWithSearchBar() {
+export default function NavigationBarWithSearchBar({ searchCallback }) {
   const [isNavigationMenuOpen, setIsNavigationMenuOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   return (
     <div className="w-full bg-nanobloxGray select-none">
@@ -17,13 +18,23 @@ export default function NavigationBarWithSearchBar() {
           isNavigationMenuOpen={isNavigationMenuOpen}
           setIsNavigationMenuOpen={setIsNavigationMenuOpen}
         />
-        <SearchBar className="hidden sm:block px-4 flex-grow mx-8" />
+        <SearchBar
+          className="hidden sm:block px-4 flex-grow mx-8"
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          searchCallback={searchCallback}
+        />
         <NavigationLinks />
       </div>
       <NavigationMenu
         className={`${isNavigationMenuOpen ? "block" : "hidden"}`}
       />
-      <SearchBar className="w-full pt-1 pb-4 px-4 sm:hidden" />
+      <SearchBar
+        className="w-full pt-1 pb-4 px-4 sm:hidden"
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        searchCallback={searchCallback}
+      />
     </div>
   );
 }

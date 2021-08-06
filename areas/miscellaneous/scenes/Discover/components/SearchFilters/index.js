@@ -22,7 +22,7 @@ export default function SearchFilters({ searchFilter, setSearchFilter }) {
             ? "Most Popular"
             : searchFilter.type === "recentlyAdded"
             ? "Recently Added"
-            : ""}
+            : searchFilter.type === "search" && searchFilter.value}
         </span>
         "
       </div>

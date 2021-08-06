@@ -1,4 +1,9 @@
-export default function SearchBar({ className }) {
+export default function SearchBar({
+  className,
+  searchValue,
+  setSearchValue,
+  searchCallback,
+}) {
   return (
     <div className={className}>
       <div className="overflow-hidden rounded-lg flex items-center bg-nanobloxGray-dark">
@@ -21,8 +26,12 @@ export default function SearchBar({ className }) {
         <input
           className="w-full flex-grow bg-nanobloxGray-dark text-white outline-none"
           type="text"
-          value=""
+          value={searchValue}
           placeholder="Search"
+          onChange={(event) => setSearchValue(event.target.value)}
+          onKeyPress={(event) =>
+            event.key === "Enter" && searchCallback(searchValue)
+          }
         ></input>
       </div>
     </div>
