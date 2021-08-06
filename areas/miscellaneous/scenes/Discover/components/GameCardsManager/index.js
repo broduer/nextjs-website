@@ -55,12 +55,12 @@ export default function GameCardsManager({ className, searchFilter }) {
 
   return (
     <>
-      {status === "fulfilled" ||
-        (status === "rejected" && gameCardsData.length === 0 && (
+      {(status === "fulfilled" || status === "rejected") &&
+        gameCardsData.length === 0 && (
           <div className="mt-16 w-full text-center text-gray-200 text-xl">
             Search result returned nothing
           </div>
-        ))}
+        )}
       <div
         className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ${className}`}
       >

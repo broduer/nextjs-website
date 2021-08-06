@@ -10,6 +10,9 @@ export default function Discover() {
     value: "",
   });
 
+  if (searchFilter.type === "search" && searchFilter.value === "")
+    setSearchFilter({ type: "mostPopular" });
+
   return (
     <div className="w-full min-h-screen flex flex-col bg-nanobloxGray-light">
       <NavigationBarWithSearchBar
