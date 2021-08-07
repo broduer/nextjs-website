@@ -3,6 +3,7 @@ import { useState } from "react";
 import NavigationBarWithSearchBar from "../../../../components/navigationBars/NavigationBarWithSearchBar";
 import GameCardsManager from "./components/GameCardsManager";
 import SearchFilters from "./components/SearchFilters";
+import Head from "next/head";
 
 export default function Discover() {
   const [searchFilter, setSearchFilter] = useState({

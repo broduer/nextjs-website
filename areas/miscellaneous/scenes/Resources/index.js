@@ -1,5 +1,6 @@
 import NavigationBar from "../../../../components/navigationBars/NavigationBar";
 import ResourceCard from "./components/ResourceCard";
+import Head from "next/head";
 
 export default function Resources() {
   return (
