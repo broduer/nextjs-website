@@ -15,6 +15,13 @@ export default function Discover() {
 
   return (
     <div className="w-full min-h-screen flex flex-col bg-nanobloxGray-light">
+      <Head>
+        <title>Nanoblox</title>
+        <meta
+          name="description"
+          content="Discover popular games that use Nanoblox and enjoy your perks."
+        />
+      </Head>
       <NavigationBarWithSearchBar
         searchCallback={(searchValue) =>
           setSearchFilter({ type: "search", value: searchValue })

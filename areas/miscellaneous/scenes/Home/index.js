@@ -1,10 +1,18 @@
 import RobloxGamesBackground from "../../../../public/images/RobloxGamesBackground.jpg";
 
 import FadedNavigationBar from "../../../../components/navigationBars/FadedNavigationBar";
+import Head from "next/head";
 
 export default function Home() {
   return (
     <div className="w-full min-h-screen flex flex-col">
+      <Head>
+        <title>Nanoblox</title>
+        <meta
+          name="description"
+          content="An administration system powering dynamic roles, modular commands, global broadcasts, studio and in-game panels, moderations, logs, and much more."
+        />
+      </Head>
       <FadedNavigationBar />
       <div
         className="w-full flex flex-grow bg-black bg-no-repeat bg-cover bg-center"
