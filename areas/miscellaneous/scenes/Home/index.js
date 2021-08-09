@@ -19,9 +19,16 @@ export default function Home() {
         style={{ backgroundImage: `url(${RobloxGamesBackground.src})` }}
       >
         <div className="w-full flex-grow bg-black bg-opacity-70">
+          <div className="mt-16 w-full px-8 sm:px-12 md:px-14 lg:px-16 xl:px-32 2xl:px-40">
+            <div className="py-2 px-8 bg-orange-500 text-center text-white rounded-lg">
+              The statistics and games on this website are for testing purposes
+              and currently do not reflect the true state of Nanoblox while it's
+              still under development.
+            </div>
+          </div>
           <div className="mx-auto flex flex-col container">
-            <div className="mx-auto w-full px-8 sm:px-24 md:px-28 lg:px-32 xl:px-64 2xl:px-80 text-center font-semibold">
-              <div className="mt-16 text-white text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-7xl">
+            <div className="mt-16 mx-auto w-full px-8 sm:px-24 md:px-28 lg:px-32 xl:px-64 2xl:px-80 text-center font-semibold">
+              <div className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-7xl">
                 TAKE CONTROL OF <br className="hidden 2xl:block" /> YOUR{" "}
                 <span className="text-red-500">GAME</span>
               </div>
