@@ -1,34 +1,30 @@
 import useAsync from "../../../../../../services/hooks/useAsync";
 import { useState, useEffect, useRef } from "react";
 
-import FulfilledGameCard from "./components/FulfilledGameCard";
-import PendingGameCard from "./components/PendingGameCard";
+import PendingResourceCard from "./components/PendingResourceCard";
+import FulfilledResourceCard from "./components/FulfilledResourceCard";
 
-import getGameCardsData from "./services/getGameCardsData";
-import getGameCardsUrl from "./services/getGameCardsUrl";
+import getResourceCardsData from "./services/getResourceCardsData";
 
-export default function GameCardsManager({ className, searchFilter }) {
-  const [gameCardsData, setGameCardsData] = useState([]);
+export default function ResourceCardsManager({ className }) {
+  const [resourceCardsData, setResourceCardsData] = useState([]);
 
   const noMorePagesRef = useRef(false);
 
-  const [initiate, status, response, error] = useAsync(
-    ({ searchFilter, gameCardsData }) =>
-      getGameCardsData(getGameCardsUrl(searchFilter, gameCardsData))
+  const [initiate, status, response, error] = useAsync((resourceCardsData) =>
+    getResourceCardsData(resourceCardsData)
   );
 
   useEffect(() => {
-    setGameCardsData([]);
-    noMorePagesRef.current = false;
-    initiate({ searchFilter, gameCardsData: [] });
-  }, [searchFilter]);
+    initiate(resourceCardsData);
+  }, []);
 
   useEffect(() => {
     if (response) {
       if (response.length === 0) {
         noMorePagesRef.current = true;
       } else {
-        setGameCardsData((value) => [...value, ...response]);
+        setResourceCardsData((value) => [...value, ...response]);
       }
     }
   }, [response]);
@@ -41,7 +37,7 @@ export default function GameCardsManager({ className, searchFilter }) {
           document.documentElement.offsetHeight
         ) {
           if (status === "fulfilled" && !noMorePagesRef.current) {
-            initiate({ searchFilter, gameCardsData });
+            initiate(resourceCardsData);
           }
         }
       };
@@ -49,28 +45,31 @@ export default function GameCardsManager({ className, searchFilter }) {
       return () => window.removeEventListener("scroll", loadOnScroll);
     } else {
       if (status === "fulfilled" && !noMorePagesRef.current) {
-        initiate({ searchFilter, gameCardsData });
+        initiate(resourceCardsData);
       }
     }
-  }, [status, gameCardsData]);
+  }, [status, resourceCardsData]);
 
   return (
     <>
       {(status === "fulfilled" || status === "rejected") &&
-        gameCardsData.length === 0 && (
+        resourceCardsData.length === 0 && (
           <div className="mt-16 w-full text-center text-gray-200 text-xl">
-            Search result returned nothing
+            No Resources Found
           </div>
         )}
       <div
-        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ${className}`}
+        className={`${className} grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4`}
       >
-        {gameCardsData.map((gameCardData, gameCardIndex) => (
-          <FulfilledGameCard key={gameCardIndex} gameCardData={gameCardData} />
+        {resourceCardsData.map((resourceCardData, resourceCardIndex) => (
+          <FulfilledResourceCard
+            key={resourceCardIndex}
+            resourceCardData={resourceCardData}
+          />
         ))}
         {status === "pending" &&
           [...Array(8).keys()].map((_, index) => (
-            <PendingGameCard key={index} />
+            <PendingResourceCard key={index} />
           ))}
       </div>
     </>
