@@ -10,7 +10,7 @@ export default function Home() {
         <title>Nanoblox</title>
         <meta
           name="description"
-          content="An administration system powering dynamic roles, modular commands, global broadcasts, studio and in-game panels, moderations, logs, and much more."
+          content="Nanoblox is an administration suite powering dynamic roles, modular commands, global broadcasts, moderation, monetization, audit logs, and more, used by many top Roblox games."
         />
       </Head>
       <FadedNavigationBar />
@@ -26,9 +26,9 @@ export default function Home() {
                 <span className="text-red-500">GAME</span>
               </div>
               <div className="mt-4 text-gray-400 leading-5 sm:text-lg md:text-xl lg:text-xl xl:text-xl">
-                An administration system powering dynamic roles, modular
-                commands, global broadcasts, studio and in-game panels,
-                moderations, logs, and much more.
+                Nanoblox is an administration suite powering dynamic roles,
+                modular commands, global broadcasts, moderation, monetization,
+                audit logs, and more, used by many top Roblox games.
               </div>
             </div>
             <div className="mt-4 sm:mt-16 flex flex-col sm:flex-row justify-center text-white font-semibold text-center">
