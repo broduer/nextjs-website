@@ -1,5 +1,4 @@
 import NavigationBar from "../../../../components/navigationBars/NavigationBar";
-import ResourceCard from "./components/ResourceCard";
 import ResourceCardsManager from "./components/ResourceCardsManager";
 import Head from "next/head";
 
