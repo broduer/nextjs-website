@@ -1,8 +1,7 @@
 import useAsync from "../../../../../../services/hooks/useAsync";
 import { useState, useEffect, useRef } from "react";
 
-import PendingResourceCard from "./components/PendingResourceCard";
-import FulfilledResourceCard from "./components/FulfilledResourceCard";
+import ResourceCard from "./components/ResourceCard";
 
 import getResourceCardsData from "./services/getResourceCardsData";
 import hasScrolledToBottom from "../../../../../../services/utilities/hasScrolledToBottom";
@@ -66,16 +65,17 @@ export default function ResourceCardsManager({ className }) {
         className={`${className} grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4`}
       >
         {resourceCardsData.map((resourceCardData, resourceCardIndex) => (
-          <FulfilledResourceCard
+          <ResourceCard
             key={resourceCardIndex}
             resourceCardData={resourceCardData}
           />
         ))}
-        {status === "pending" &&
-          [...Array(8).keys()].map((_, index) => (
-            <PendingResourceCard key={index} />
-          ))}
       </div>
+      {status === "pending" && (
+        <div className="flex my-16">
+          <div className="loader mx-auto ease-linear rounded-full border-8 border-gray-200 h-16 w-16"></div>
+        </div>
+      )}
     </>
   );
 }

@@ -1,8 +1,7 @@
 import useAsync from "../../../../../../services/hooks/useAsync";
 import { useState, useEffect, useRef } from "react";
 
-import FulfilledGameCard from "./components/FulfilledGameCard";
-import PendingGameCard from "./components/PendingGameCard";
+import GameCard from "./components/GameCard";
 
 import getGameCardsData from "./services/getGameCardsData";
 import getGameCardsUrl from "./services/getGameCardsUrl";
@@ -70,13 +69,14 @@ export default function GameCardsManager({ className, searchFilter }) {
         className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ${className}`}
       >
         {gameCardsData.map((gameCardData, gameCardIndex) => (
-          <FulfilledGameCard key={gameCardIndex} gameCardData={gameCardData} />
+          <GameCard key={gameCardIndex} gameCardData={gameCardData} />
         ))}
-        {status === "pending" &&
-          [...Array(8).keys()].map((_, index) => (
-            <PendingGameCard key={index} />
-          ))}
       </div>
+      {status === "pending" && (
+        <div className="flex my-16">
+          <div className="loader mx-auto ease-linear rounded-full border-8 border-gray-200 h-16 w-16"></div>
+        </div>
+      )}
     </>
   );
 }
