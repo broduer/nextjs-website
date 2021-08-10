@@ -6,6 +6,7 @@ import PendingGameCard from "./components/PendingGameCard";
 
 import getGameCardsData from "./services/getGameCardsData";
 import getGameCardsUrl from "./services/getGameCardsUrl";
+import hasScrolledToBottom from "../../../../../../services/utilities/hasScrolledToBottom";
 
 export default function GameCardsManager({ className, searchFilter }) {
   const [gameCardsData, setGameCardsData] = useState([]);
@@ -34,12 +35,15 @@ export default function GameCardsManager({ className, searchFilter }) {
   }, [response]);
 
   useEffect(() => {
+    if (hasScrolledToBottom()) {
+      if (status === "fulfilled" && !noMorePagesRef.current) {
+        initiate({ searchFilter, gameCardsData });
+      }
+    }
+
     if (document.documentElement.offsetHeight > window.innerHeight) {
       const loadOnScroll = () => {
-        if (
-          window.innerHeight + document.documentElement.scrollTop + 10 >=
-          document.documentElement.offsetHeight
-        ) {
+        if (hasScrolledToBottom()) {
           if (status === "fulfilled" && !noMorePagesRef.current) {
             initiate({ searchFilter, gameCardsData });
           }
