@@ -5,6 +5,7 @@ import PendingResourceCard from "./components/PendingResourceCard";
 import FulfilledResourceCard from "./components/FulfilledResourceCard";
 
 import getResourceCardsData from "./services/getResourceCardsData";
+import hasScrolledToBottom from "../../../../../../services/utilities/hasScrolledToBottom";
 
 export default function ResourceCardsManager({ className }) {
   const [resourceCardsData, setResourceCardsData] = useState([]);
@@ -30,12 +31,15 @@ export default function ResourceCardsManager({ className }) {
   }, [response]);
 
   useEffect(() => {
+    if (hasScrolledToBottom()) {
+      if (status === "fulfilled" && !noMorePagesRef.current) {
+        initiate(resourceCardsData);
+      }
+    }
+
     if (document.documentElement.offsetHeight > window.innerHeight) {
       const loadOnScroll = () => {
-        if (
-          window.innerHeight + document.documentElement.scrollTop + 10 >=
-          document.documentElement.offsetHeight
-        ) {
+        if (hasScrolledToBottom()) {
           if (status === "fulfilled" && !noMorePagesRef.current) {
             initiate(resourceCardsData);
           }
