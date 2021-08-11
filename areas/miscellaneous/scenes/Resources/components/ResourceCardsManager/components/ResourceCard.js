@@ -1,6 +1,12 @@
+import DefaultResource from "../../../../../../../public/images/DefaultResource.png";
+
+import { useRef } from "react";
+
 export default function FulfilledResourceCard({ resourceCardData }) {
   const { imageUrl, title, description, resourceUrl, resourceLinkText } =
     resourceCardData;
+
+  const imageRef = useRef();
 
   return (
     <div className="w-full flex flex-col mx-auto rounded-lg overflow-hidden shadow-lg">
@@ -8,6 +14,13 @@ export default function FulfilledResourceCard({ resourceCardData }) {
         <img
           className="absolute w-full h-full object-cover object-center"
           src={imageUrl}
+          ref={imageRef}
+          onError={() => {
+            if (imageRef.current) {
+              if (imageRef.current.src != DefaultResource.src)
+                imageRef.current.src = DefaultResource.src;
+            }
+          }}
         />
       </div>
       <div className="w-full p-4 flex-grow flex flex-col bg-nanobloxGray text-white">
