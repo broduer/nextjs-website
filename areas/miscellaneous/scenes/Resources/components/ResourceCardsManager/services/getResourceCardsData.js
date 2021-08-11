@@ -12,7 +12,5 @@ export default async function getResourceCardsData(resourceCardsData) {
 
   const data = await response.json();
 
-  console.log(data);
-
   return data.payload;
 }

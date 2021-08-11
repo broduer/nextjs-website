@@ -11,6 +11,7 @@ export default function GameCardsManager({ className, searchFilter }) {
   const [gameCardsData, setGameCardsData] = useState([]);
 
   const noMorePagesRef = useRef(false);
+  const loadMorePagesDivRef = useRef();
 
   const [initiate, status, response, error] = useAsync(
     ({ searchFilter, gameCardsData }) =>
@@ -34,28 +35,33 @@ export default function GameCardsManager({ className, searchFilter }) {
   }, [response]);
 
   useEffect(() => {
-    if (hasScrolledToBottom()) {
-      if (status === "fulfilled" && !noMorePagesRef.current) {
-        initiate({ searchFilter, gameCardsData });
-      }
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
 
-    if (document.documentElement.offsetHeight > window.innerHeight) {
-      const loadOnScroll = () => {
-        if (hasScrolledToBottom()) {
-          if (status === "fulfilled" && !noMorePagesRef.current) {
-            initiate({ searchFilter, gameCardsData });
-          }
+        if (
+          entry.isIntersecting &&
+          status === "fulfilled" &&
+          !noMorePagesRef.current
+        ) {
+          initiate({ searchFilter, gameCardsData });
         }
-      };
-      window.addEventListener("scroll", loadOnScroll);
-      return () => window.removeEventListener("scroll", loadOnScroll);
-    } else {
-      if (status === "fulfilled" && !noMorePagesRef.current) {
-        initiate({ searchFilter, gameCardsData });
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.5,
       }
-    }
-  }, [status, gameCardsData]);
+    );
+
+    if (loadMorePagesDivRef.current)
+      observer.observe(loadMorePagesDivRef.current);
+
+    return () => {
+      if (loadMorePagesDivRef.current)
+        observer.unobserve(loadMorePagesDivRef.current);
+    };
+  }, [status, loadMorePagesDivRef]);
 
   return (
     <>
@@ -72,6 +78,7 @@ export default function GameCardsManager({ className, searchFilter }) {
           <GameCard key={gameCardIndex} gameCardData={gameCardData} />
         ))}
       </div>
+      <div className="w-full h-8" ref={loadMorePagesDivRef}></div>
       {status === "pending" && (
         <div className="flex my-16">
           <div className="loader mx-auto ease-linear rounded-full border-8 border-gray-200 h-16 w-16"></div>

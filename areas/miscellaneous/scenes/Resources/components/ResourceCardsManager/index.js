@@ -10,6 +10,7 @@ export default function ResourceCardsManager({ className }) {
   const [resourceCardsData, setResourceCardsData] = useState([]);
 
   const noMorePagesRef = useRef(false);
+  const loadMorePagesDivRef = useRef();
 
   const [initiate, status, response, error] = useAsync((resourceCardsData) =>
     getResourceCardsData(resourceCardsData)
@@ -30,28 +31,33 @@ export default function ResourceCardsManager({ className }) {
   }, [response]);
 
   useEffect(() => {
-    if (hasScrolledToBottom()) {
-      if (status === "fulfilled" && !noMorePagesRef.current) {
-        initiate(resourceCardsData);
-      }
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
 
-    if (document.documentElement.offsetHeight > window.innerHeight) {
-      const loadOnScroll = () => {
-        if (hasScrolledToBottom()) {
-          if (status === "fulfilled" && !noMorePagesRef.current) {
-            initiate(resourceCardsData);
-          }
+        if (
+          entry.isIntersecting &&
+          status === "fulfilled" &&
+          !noMorePagesRef.current
+        ) {
+          initiate(resourceCardsData);
         }
-      };
-      window.addEventListener("scroll", loadOnScroll);
-      return () => window.removeEventListener("scroll", loadOnScroll);
-    } else {
-      if (status === "fulfilled" && !noMorePagesRef.current) {
-        initiate(resourceCardsData);
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
       }
-    }
-  }, [status, resourceCardsData]);
+    );
+
+    if (loadMorePagesDivRef.current)
+      observer.observe(loadMorePagesDivRef.current);
+
+    return () => {
+      if (loadMorePagesDivRef.current)
+        observer.unobserve(loadMorePagesDivRef.current);
+    };
+  }, [status, loadMorePagesDivRef]);
 
   return (
     <>
@@ -71,6 +77,7 @@ export default function ResourceCardsManager({ className }) {
           />
         ))}
       </div>
+      <div className="w-full h-8" ref={loadMorePagesDivRef}></div>
       {status === "pending" && (
         <div className="flex my-16">
           <div className="loader mx-auto ease-linear rounded-full border-8 border-gray-200 h-16 w-16"></div>
