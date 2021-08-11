@@ -8,7 +8,10 @@ export default async function getResourceCardsData(resourceCardsData) {
     ? `${BACKEND_SERVER_URL}/api/resources/page`
     : `${BACKEND_SERVER_URL}/api/resources/page/${lastResourceCard._id}`;
 
-  const response = await fetch(resourceCardsUrl);
+  const response = await fetch(resourceCardsUrl, {
+    method: "GET",
+    credentials: "include",
+  });
 
   const data = await response.json();
 
