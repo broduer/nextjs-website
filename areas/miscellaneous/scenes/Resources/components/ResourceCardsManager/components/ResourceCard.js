@@ -1,5 +1,6 @@
 export default function FulfilledResourceCard({ resourceCardData }) {
-  const { imageUrl, title, description, resourceUrl } = resourceCardData;
+  const { imageUrl, title, description, resourceUrl, resourceLinkText } =
+    resourceCardData;
 
   return (
     <div className="w-full flex flex-col mx-auto rounded-lg overflow-hidden shadow-lg">
@@ -19,7 +20,7 @@ export default function FulfilledResourceCard({ resourceCardData }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn more...
+            {resourceLinkText}
           </a>
         </div>
       </div>
