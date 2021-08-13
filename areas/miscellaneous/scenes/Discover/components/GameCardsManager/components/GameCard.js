@@ -1,3 +1,7 @@
+import DefaultRobloxPlace from "../../../../../../../public/images/DefaultRobloxPlace.png";
+
+import { useRef } from "react";
+
 import numberFormatter from "../../../../../../../services/utilities/numberFormatter";
 
 export default function FulfilledGameCard({ gameCardData }) {
@@ -18,13 +22,24 @@ export default function FulfilledGameCard({ gameCardData }) {
       ? `https://www.roblox.com/groups/${creatorId}`
       : `https://www.roblox.com/users/${creatorId}`;
 
+  const imageRef = useRef();
+
   return (
     <div className="w-full flex flex-col mx-auto rounded-lg overflow-hidden shadow-lg">
       <div className="relative" style={{ paddingBottom: "56%" }}>
-        <img
-          className="absolute w-full h-full object-cover object-center"
-          src={thumbnailUrl}
-        />
+        <a href={rootPlaceUrl} target="_blank" rel="noopener noreferrer">
+          <img
+            className="absolute w-full h-full object-cover object-center"
+            src={thumbnailUrl}
+            ref={imageRef}
+            onError={() => {
+              if (imageRef.current) {
+                if (imageRef.current.src != DefaultRobloxPlace.src)
+                  imageRef.current.src = DefaultRobloxPlace.src;
+              }
+            }}
+          />
+        </a>
       </div>
       <div className="w-full p-4 flex-grow flex flex-col bg-nanobloxGray text-white">
         <div className="text-xl font-semibold leading-tight">{title}</div>
