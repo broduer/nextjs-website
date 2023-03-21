@@ -22,7 +22,7 @@ export default function Home() {
           <div className="mt-16 w-full px-8 sm:px-12 md:px-14 lg:px-16 xl:px-32 2xl:px-40">
             <div className="py-2 px-8 bg-orange-500 text-center text-white rounded-lg">
               The statistics and games on this website are for testing purposes
-              and currently do not reflect the true state of Nanoblox while it's
+              and currently do not reflect the true state of Nanobloxed while it's
               still under development.
             </div>
           </div>
@@ -33,7 +33,7 @@ export default function Home() {
                 <span className="text-red-500">GAME</span>
               </div>
               <div className="mt-4 text-gray-400 leading-5 sm:text-lg md:text-xl lg:text-xl xl:text-xl">
-                Nanoblox is an administration suite powering dynamic roles,
+                Nanobloxed is an administration suite powering dynamic roles,
                 modular commands, global broadcasts, moderation, monetization,
                 audit logs, and more, used by many top Roblox games.
               </div>
@@ -57,7 +57,7 @@ export default function Home() {
               </div>
               <div className="mt-4 sm:mt-0 flex-1">
                 <div className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-4xl">
-                  $2,040,390+
+                  $9,040,390+
                 </div>
                 <div className="text-green-500 text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">
                   EARNED
