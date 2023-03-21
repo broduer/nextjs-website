@@ -21,6 +21,7 @@ export default function Home() {
         <div className="w-full flex-grow bg-black bg-opacity-70">
           <div className="mt-16 w-full px-8 sm:px-12 md:px-14 lg:px-16 xl:px-32 2xl:px-40">
             <div className="py-2 px-8 bg-orange-500 text-center text-white rounded-lg">
+              COMING SOON!
               The statistics and games on this website are for testing purposes
               and currently do not reflect the true state of Nanobloxed while it's
               still under development.
