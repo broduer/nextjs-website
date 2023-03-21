@@ -56,7 +56,7 @@ export default function Home() {
               </div>
               <div className="mt-4 sm:mt-0 flex-1">
                 <div className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-4xl">
-                  $9,040,390+
+                  $40,390+
                 </div>
                 <div className="text-green-500 text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-2xl">
                   EARNED
