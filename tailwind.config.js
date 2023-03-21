@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        nanobloxGray: {
+        shockGray: {
           light: "#36393f",
           DEFAULT: "#292b2f",
           dark: "#161719",

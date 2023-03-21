@@ -6,7 +6,7 @@ export default function Resources() {
   return (
     <div className="w-full min-h-screen flex flex-col bg-nanobloxGray-light">
       <Head>
-        <title>Nanoblox</title>
+        <title>Shock Networks</title>
         <meta
           name="description"
           content="Find resources and documentations to learn what Nanoblox has to offer to developers and users."
