@@ -17,7 +17,7 @@ export default function Discover() {
   return (
     <div className="w-full min-h-screen flex flex-col bg-nanobloxGray-light">
       <Head>
-        <title>Nanoblox</title>
+        <title>Shock Networks</title>
         <meta
           name="description"
           content="Discover popular games that use Nanoblox and enjoy your perks."

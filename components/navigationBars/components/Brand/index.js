@@ -18,7 +18,7 @@ export default function Brand({ className }) {
                 fill="#fff"
               />
             </svg>
-            <div className="ml-2 text-white font-bold text-lg">Nanoblox</div>
+            <div className="ml-2 text-white font-bold text-lg">Shock</div>
           </div>
         </a>
       </Link>

@@ -7,10 +7,10 @@ export default function Home() {
   return (
     <div className="w-full min-h-screen flex flex-col">
       <Head>
-        <title>Nanobloxed</title>
+        <title>Shock Networks</title>
         <meta
           name="description"
-          content="Nanobloxed is an administration suite powering dynamic roles, modular commands, global broadcasts, moderation, monetization, audit logs, and more, used by many top Roblox games."
+          content="Shock Networks is your goto for all your needs for Roblox, Minecraft, Counter Strike, and as always GTA 5 - Mods included."
         />
       </Head>
       <FadedNavigationBar />
@@ -33,9 +33,7 @@ export default function Home() {
                 <span className="text-red-500">GAME</span>
               </div>
               <div className="mt-4 text-gray-400 leading-5 sm:text-lg md:text-xl lg:text-xl xl:text-xl">
-                Nanobloxed is an administration suite powering dynamic roles,
-                modular commands, global broadcasts, moderation, monetization,
-                audit logs, and more, used by many top Roblox games.
+                Shock Networks is your goto for all your needs for Roblox, Minecraft, Counter Strike, and as always GTA 5 - Mods included..
               </div>
             </div>
             <div className="mt-4 sm:mt-16 flex flex-col sm:flex-row justify-center text-white font-semibold text-center">
