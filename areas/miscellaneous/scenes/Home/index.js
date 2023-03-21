@@ -7,10 +7,10 @@ export default function Home() {
   return (
     <div className="w-full min-h-screen flex flex-col">
       <Head>
-        <title>Nanoblox</title>
+        <title>Nanobloxed</title>
         <meta
           name="description"
-          content="Nanoblox is an administration suite powering dynamic roles, modular commands, global broadcasts, moderation, monetization, audit logs, and more, used by many top Roblox games."
+          content="Nanobloxed is an administration suite powering dynamic roles, modular commands, global broadcasts, moderation, monetization, audit logs, and more, used by many top Roblox games."
         />
       </Head>
       <FadedNavigationBar />
